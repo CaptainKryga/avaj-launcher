@@ -16,7 +16,7 @@ public class Tower {
 
     }
 
-    public void conditionsChanged() {
+    protected void conditionsChanged() {
 
     }
 
