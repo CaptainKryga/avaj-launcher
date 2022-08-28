@@ -27,7 +27,7 @@ public class CustomLogger {
                 fd.write(log);
                 fd.close();
             } catch (IOException ioe) {
-                throw new CustomExeption("ERROR. Couldn't create simulation.txt file :(");
+                throw new CustomExeption("Couldn't create simulation.txt file :(");
             }
         }
         else {

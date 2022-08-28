@@ -2,12 +2,9 @@ package Fly;
 
 import Aircraft.Aircraft;
 import Inteface.Flyable;
-import Simulator.CustomExeption;
 import Simulator.CustomLogger;
 import Tower.Coordinates;
 import Weather.WeatherTower;
-
-import java.io.IOException;
 
 public class Baloon extends Aircraft implements Flyable {
     private WeatherTower weatherTower;

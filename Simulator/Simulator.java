@@ -42,8 +42,16 @@ public class Simulator {
     private static boolean checker(List<String> list) throws CustomExeption {
         //чек на количество элементов
         if (list.size() < 2) {
-            error = "Error: need more data";
+            error = "need more data";
             throw new CustomExeption(error);
+        }
+
+        //чек на количество символов в строке
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).length() < 1) {
+                error = "line #" + (i + 1) + " not enough parameters, need 5";
+                throw new CustomExeption(error);
+            }
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -61,7 +69,7 @@ public class Simulator {
                         throw new CustomExeption(error);
                     }
                 } catch (NumberFormatException e) {
-                    error = "line #" + (i + 1) + " wrong number, now " + arr[0] + ", need: int number";
+                    error = "line #" + (i + 1) + " wrong number, now [" + arr[0] + "], need: int number";
                     throw new CustomExeption(error);
                 }
                 continue;
@@ -69,13 +77,13 @@ public class Simulator {
 
             //чек на количество параметров
             if (arr.length != 5) {
-                error = "line #" + (i + 1) + " not enough parameters, now " + arr.length + ", need 5";
+                error = "line #" + (i + 1) + " not enough parameters, now [" + arr.length + "], need 5";
                 throw new CustomExeption(error);
             }
 
             //чек на тип
             if (!arr[0].equals("Baloon") && !arr[0].equals("JetPlane") && !arr[0].equals("Helicopter")) {
-                error = "line #" + (i + 1) + " wrong type, now " + arr[0] + ", need: Baloon or JetPlane or Helicopter";
+                error = "line #" + (i + 1) + " wrong type, now [" + arr[0] + "], need: Baloon or JetPlane or Helicopter";
                 throw new CustomExeption(error);
             }
 
@@ -87,7 +95,7 @@ public class Simulator {
                         throw new CustomExeption(error);
                     }
                 } catch (NumberFormatException e) {
-                    error = "line #" + (i + 1) + " wrong number, now " + arr[x] + ", need: int number";
+                    error = "line #" + (i + 1) + " wrong number, now [" + arr[x] + "], need: int number";
                     throw new CustomExeption(error);
                 }
             }
