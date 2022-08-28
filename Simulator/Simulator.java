@@ -1,20 +1,25 @@
 package Simulator;
 
+import Aircraft.AircraftFactory;
+import Inteface.Flyable;
+import Weather.WeatherTower;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Simulator {
     private static List<String> data = new ArrayList<>();
     private static String error;
-
-    public Simulator() { /* constructor */ }
+    private static List<Flyable> flyables = new ArrayList<>();
+    private static WeatherTower weatherTower;
 
     private static boolean parser(String file) {
         BufferedReader reader;
-        String line = " ";
+        String line;
 
         //парсим файл
         try {
@@ -32,42 +37,13 @@ public class Simulator {
             return false;
         }
         return true;
-
-//        while (line != null) {
-//
-//            line = reader.readLine();
-//            cnt++;
-//            if (line == null || line.length() == 0)
-//                continue;
-//
-//            String split[] = line.split(" ");
-//            if (split.length == 0)
-//                continue;
-//            if (split.length != 5)
-//                throw new AvajException("ERROR: Invalid line #" + cnt + " in a scenario file.");
-//
-//            try {
-//                int coords[] = { Integer.parseInt(split[2]), Integer.parseInt(split[3]), Integer.parseInt(split[4]) };
-//                for (int c : coords) {
-//                    if (c < 1)
-//                        throw new AvajException("ERROR: Invalid line #" + cnt + " in a scenario file." +
-//                                "\nCoordinates must be POSITIVE INTEGERS!");
-//                }
-//
-//                aircrafts.add(AircraftFactory.newAircraft(split[0], split[1], coords[0], coords[1], coords[2]));
-//
-//            } catch (NumberFormatException e) {
-//                throw new AvajException("ERROR: Invalid line #" + cnt + " in a scenario file." +
-//                        "\nCoordinates must be 3 positive, space-separated integers.");
-//            }
-//        }
     }
 
-    private static boolean checker(List<String> list) {
+    private static boolean checker(List<String> list) throws CustomExeption {
         //чек на количество элементов
         if (list.size() < 2) {
             error = "Error: need more data";
-            return false;
+            throw new CustomExeption(error);
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -77,42 +53,42 @@ public class Simulator {
             if (i == 0) {
                 try {
                     if (arr.length != 1) {
-                        error = "line #" + i + 1 + " wrong num iteration, now [" + list.get(i) + "], need: positive int number";
-                        return false;
+                        error = "line #" + (i + 1) + " wrong num iteration, now [" + list.get(i) + "], need: positive int number";
+                        throw new CustomExeption(error);
                     }
                     if (Integer.parseInt(arr[0]) <= 0) {
-                        error = "line #" + i + 1 + " wrong num iteration, now [" + arr[0] + "], need: positive int number";
-                        return false;
+                        error = "line #" + (i + 1) + " wrong num iteration, now [" + arr[0] + "], need: positive int number";
+                        throw new CustomExeption(error);
                     }
                 } catch (NumberFormatException e) {
-                    error = "line #" + i + 1 + " wrong number, now " + arr[0] + ", need: int number";
-                    return false;
+                    error = "line #" + (i + 1) + " wrong number, now " + arr[0] + ", need: int number";
+                    throw new CustomExeption(error);
                 }
                 continue;
             }
 
             //чек на количество параметров
             if (arr.length != 5) {
-                error = "line #" + i + 1 + " not enough parameters, now " + arr.length + ", need 5";
-                return false;
+                error = "line #" + (i + 1) + " not enough parameters, now " + arr.length + ", need 5";
+                throw new CustomExeption(error);
             }
 
             //чек на тип
             if (!arr[0].equals("Baloon") && !arr[0].equals("JetPlane") && !arr[0].equals("Helicopter")) {
-                error = "line #" + i + 1 + " wrong type, now " + arr[0] + ", need: Baloon or JetPlane or Helicopter";
-                return false;
+                error = "line #" + (i + 1) + " wrong type, now " + arr[0] + ", need: Baloon or JetPlane or Helicopter";
+                throw new CustomExeption(error);
             }
 
             //чек на число
             for (int x = 2; x < arr.length; x++) {
                 try {
                     if (Integer.parseInt(arr[x]) <= 0) {
-                        error = "line #" + i + 1 + " wrong int num, now [" + arr[x] + "], need: positive int number";
-                        return false;
+                        error = "line #" + (i + 1) + " wrong int num, now [" + arr[x] + "], need: positive int number";
+                        throw new CustomExeption(error);
                     }
                 } catch (NumberFormatException e) {
-                    error = "line #" + i + 1 + " wrong number, now " + arr[x] + ", need: int number";
-                    return false;
+                    error = "line #" + (i + 1) + " wrong number, now " + arr[x] + ", need: int number";
+                    throw new CustomExeption(error);
                 }
             }
 
@@ -120,24 +96,40 @@ public class Simulator {
         return true;
     }
 
-    public static void main(String[] args) {
+    private static void startSimulation() {
+        //генерируем башню
+        weatherTower = new WeatherTower(Integer.parseInt(data.get(0)));
+        //генерируем все летающие объекты
+        for (String str : data) {
+            String[] arr = str.split(" ");
+            if (arr.length != 5) continue;
+            flyables.add((new AircraftFactory().newAircraft(arr[0], arr[1],
+                    Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), Integer.parseInt(arr[4]))));
+        }
+        //добавляем их в башню
+        for (Flyable fly : flyables) {
+            fly.registerTower(weatherTower);
+        }
+    }
+
+    public static void main(String[] args) throws CustomExeption {
         if (args.length != 1) {
             System.out.println("usage: java Simulation scenario.txt");
         }
         else {
             if (!parser(args[0])) {
-                System.out.println("Error: " + error);
                 return;
             }
 
             if (!checker(data)) {
-                System.out.println("Error: " + error);
                 return;
             }
 
             //simulation
+            startSimulation();
 
             //out >> simulation.txt
+            CustomLogger.singleton.printLog();
         }
     }
 

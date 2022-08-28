@@ -5,6 +5,7 @@ import Tower.Coordinates;
 public class Aircraft {
     protected long id;
     protected String name;
+    protected String type;
     protected Coordinates coordinates;
 
     private static long idCounter;
@@ -17,6 +18,10 @@ public class Aircraft {
 
     private long nextId() {
         return idCounter++;
+    }
+
+    public String getFullName() {
+        return type + "#" + name + "(" + id + ")";
     }
 
 }

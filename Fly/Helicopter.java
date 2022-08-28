@@ -11,6 +11,7 @@ public class Helicopter extends Aircraft implements Flyable {
 
     public Helicopter(String name, Coordinates coordinates) {
         super(name, coordinates);
+        type = "Helicopter";
     }
 
     public void updateCondition() {
@@ -18,6 +19,6 @@ public class Helicopter extends Aircraft implements Flyable {
     }
 
     public void registerTower(WeatherTower Tower) {
-
+        Tower.register(this);
     }
 }
