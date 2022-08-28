@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Simulator {
     private static List<String> data = new ArrayList<>();
@@ -114,9 +113,9 @@ public class Simulator {
             fly.registerTower(weatherTower);
         }
 
-        int sIter = 0;
+//        int sIter = 0;
         for (;iterations > 0; iterations--) {
-            CustomLogger.singleton.addNewLog("sim # " + sIter++);
+//            CustomLogger.singleton.addNewLog("sim # " + sIter++);
             weatherTower.changeWeather();
         }
     }
@@ -138,7 +137,7 @@ public class Simulator {
             startSimulation();
 
             //out >> simulation.txt
-            CustomLogger.singleton.printLog();
+            CustomLogger.singleton.printLog("release");
         }
     }
 }

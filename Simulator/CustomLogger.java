@@ -1,5 +1,10 @@
 package Simulator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class CustomLogger {
     public static CustomLogger singleton = new CustomLogger();
 
@@ -11,11 +16,22 @@ public class CustomLogger {
     public void addNewLog(String str) {
         log += str;
         log += '\n';
-
-        System.out.println(str);
     }
-
-    public void printLog() {
-        System.out.println(log);
+    public void printLog(String str) throws CustomExeption {
+        if (str.equals("release"))
+        {
+            try {
+                File file = new File("simulation.txt");
+                file.delete();
+                BufferedWriter fd = new BufferedWriter(new FileWriter(file, true));
+                fd.write(log);
+                fd.close();
+            } catch (IOException ioe) {
+                throw new CustomExeption("ERROR. Couldn't create simulation.txt file :(");
+            }
+        }
+        else {
+            System.out.println(log);
+        }
     }
 }
