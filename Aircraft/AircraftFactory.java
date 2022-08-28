@@ -8,6 +8,9 @@ import Tower.Coordinates;
 
 public class AircraftFactory {
     public Flyable newAircraft(String type, String name, int longitude, int latitude, int height) {
+        if (height > 100)
+            height = 100;
+
         Coordinates newCoord = new Coordinates(longitude,latitude,height);
         if (type.equals("Baloon")) {
             return new Baloon(name, newCoord);

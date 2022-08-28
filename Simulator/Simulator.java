@@ -16,6 +16,7 @@ public class Simulator {
     private static String error;
     private static List<Flyable> flyables = new ArrayList<>();
     private static WeatherTower weatherTower;
+    private static int iterations;
 
     private static boolean parser(String file) {
         BufferedReader reader;
@@ -97,8 +98,10 @@ public class Simulator {
     }
 
     private static void startSimulation() {
+        //сохраняем значение итерации
+        iterations = Integer.parseInt(data.get(0));
         //генерируем башню
-        weatherTower = new WeatherTower(Integer.parseInt(data.get(0)));
+        weatherTower = new WeatherTower();
         //генерируем все летающие объекты
         for (String str : data) {
             String[] arr = str.split(" ");
@@ -109,6 +112,12 @@ public class Simulator {
         //добавляем их в башню
         for (Flyable fly : flyables) {
             fly.registerTower(weatherTower);
+        }
+
+        int sIter = 0;
+        for (;iterations > 0; iterations--) {
+            CustomLogger.singleton.addNewLog("sim # " + sIter++);
+            weatherTower.changeWeather();
         }
     }
 
@@ -132,5 +141,4 @@ public class Simulator {
             CustomLogger.singleton.printLog();
         }
     }
-
 }

@@ -7,6 +7,8 @@ public class Aircraft {
     protected String name;
     protected String type;
     protected Coordinates coordinates;
+    protected String[] rain, fog, sun, snow;
+
 
     private static long idCounter;
 

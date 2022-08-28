@@ -11,6 +11,8 @@ public class CustomLogger {
     public void addNewLog(String str) {
         log += str;
         log += '\n';
+
+        System.out.println(str);
     }
 
     public void printLog() {

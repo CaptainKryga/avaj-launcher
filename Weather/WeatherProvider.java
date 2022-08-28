@@ -17,11 +17,13 @@ public class WeatherProvider {
         };
     }
 
-    public WeatherProvider getProvider() {
+    public static WeatherProvider getProvider() {
         return weatherProvider;
     }
 
     public String getCurrentWeather(Coordinates coordinates) {
-        return weather[ThreadLocalRandom.current().nextInt(0, 4)];
+        int rnd = coordinates.getLongitude() + coordinates.getLatitude() + coordinates.getHeight() +
+                ThreadLocalRandom.current().nextInt(0, 4);
+        return weather[rnd % 4];
     }
 }

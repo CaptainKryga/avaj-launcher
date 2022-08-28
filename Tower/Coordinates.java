@@ -8,6 +8,8 @@ public class Coordinates {
     public Coordinates(int longitude, int latitude, int height) {
         this.longitude = longitude;
         this.latitude = latitude;
+        if (height > 100)
+            height = 100;
         this.height = height;
     }
 
