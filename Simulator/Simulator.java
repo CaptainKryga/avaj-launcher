@@ -64,7 +64,7 @@ public class Simulator {
     }
 
     private static boolean checker(List<String> list) {
-        //чек на количество элеентов
+        //чек на количество элементов
         if (list.size() < 2) {
             error = "Error: need more data";
             return false;
@@ -76,9 +76,16 @@ public class Simulator {
             //чек на количество итераций
             if (i == 0) {
                 try {
-                    Integer.parseInt(arr[0]);
+                    if (arr.length != 1) {
+                        error = "line #" + i + 1 + " wrong num iteration, now [" + list.get(i) + "], need: positive int number";
+                        return false;
+                    }
+                    if (Integer.parseInt(arr[0]) <= 0) {
+                        error = "line #" + i + 1 + " wrong num iteration, now [" + arr[0] + "], need: positive int number";
+                        return false;
+                    }
                 } catch (NumberFormatException e) {
-                    error = "line #" + i + " wrong number, now " + arr[0] + ", need: int number";
+                    error = "line #" + i + 1 + " wrong number, now " + arr[0] + ", need: int number";
                     return false;
                 }
                 continue;
@@ -86,22 +93,25 @@ public class Simulator {
 
             //чек на количество параметров
             if (arr.length != 5) {
-                error = "line #" + i + " not enough parameters, now " + arr.length + ", need 5";
+                error = "line #" + i + 1 + " not enough parameters, now " + arr.length + ", need 5";
                 return false;
             }
 
             //чек на тип
             if (!arr[0].equals("Baloon") && !arr[0].equals("JetPlane") && !arr[0].equals("Helicopter")) {
-                error = "line #" + i + " wrong type, now " + arr[0] + ", need: Baloon or JetPlane or Helicopter";
+                error = "line #" + i + 1 + " wrong type, now " + arr[0] + ", need: Baloon or JetPlane or Helicopter";
                 return false;
             }
 
             //чек на число
-            for (int x = 1; x < arr.length; x++) {
+            for (int x = 2; x < arr.length; x++) {
                 try {
-                    Integer.parseInt(arr[x]);
+                    if (Integer.parseInt(arr[x]) <= 0) {
+                        error = "line #" + i + 1 + " wrong int num, now [" + arr[x] + "], need: positive int number";
+                        return false;
+                    }
                 } catch (NumberFormatException e) {
-                    error = "line #" + i + " wrong number, now " + arr[x] + ", need: int number";
+                    error = "line #" + i + 1 + " wrong number, now " + arr[x] + ", need: int number";
                     return false;
                 }
             }
