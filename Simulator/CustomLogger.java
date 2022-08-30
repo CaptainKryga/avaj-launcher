@@ -17,7 +17,7 @@ public class CustomLogger {
         log += str;
         log += '\n';
     }
-    public void printLog(String str) throws CustomExeption {
+    public void printLog(String str) throws CustomException {
         if (str.equals("release"))
         {
             try {
@@ -27,7 +27,7 @@ public class CustomLogger {
                 fd.write(log);
                 fd.close();
             } catch (IOException ioe) {
-                throw new CustomExeption("Couldn't create simulation.txt file :(");
+                throw new CustomException("Couldn't create simulation.txt file :(");
             }
         }
         else {

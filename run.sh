@@ -1,0 +1,1 @@
+java Simulator/Simulator tests/default_subj

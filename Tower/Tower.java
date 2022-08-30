@@ -1,11 +1,10 @@
 package Tower;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import Inteface.Flyable;
 import Simulator.CustomLogger;
-import Weather.WeatherProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tower {
     private List<Flyable> observers = new ArrayList<Flyable>();
@@ -22,7 +21,7 @@ public class Tower {
 
     protected void conditionsChanged() {
         for (int i = 0; i < observers.size(); i++) {
-            observers.get(i).updateCondition();
+            observers.get(i).updateConditions();
         }
     }
 

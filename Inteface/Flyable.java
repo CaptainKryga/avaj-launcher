@@ -3,7 +3,7 @@ package Inteface;
 import Weather.WeatherTower;
 
 public interface Flyable {
-    public void updateCondition();
+    public void updateConditions();
 
     public void registerTower(WeatherTower WeatherTower);
 

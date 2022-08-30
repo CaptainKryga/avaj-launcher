@@ -39,18 +39,18 @@ public class Simulator {
         return true;
     }
 
-    private static boolean checker(List<String> list) throws CustomExeption {
+    private static boolean checker(List<String> list) throws CustomException {
         //чек на количество элементов
         if (list.size() < 2) {
             error = "need more data";
-            throw new CustomExeption(error);
+            throw new CustomException(error);
         }
 
         //чек на количество символов в строке
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).length() < 1) {
                 error = "line #" + (i + 1) + " not enough parameters, need 5";
-                throw new CustomExeption(error);
+                throw new CustomException(error);
             }
         }
 
@@ -62,15 +62,15 @@ public class Simulator {
                 try {
                     if (arr.length != 1) {
                         error = "line #" + (i + 1) + " wrong num iteration, now [" + list.get(i) + "], need: positive int number";
-                        throw new CustomExeption(error);
+                        throw new CustomException(error);
                     }
                     if (Integer.parseInt(arr[0]) <= 0) {
                         error = "line #" + (i + 1) + " wrong num iteration, now [" + arr[0] + "], need: positive int number";
-                        throw new CustomExeption(error);
+                        throw new CustomException(error);
                     }
                 } catch (NumberFormatException e) {
                     error = "line #" + (i + 1) + " wrong number, now [" + arr[0] + "], need: int number";
-                    throw new CustomExeption(error);
+                    throw new CustomException(error);
                 }
                 continue;
             }
@@ -78,13 +78,13 @@ public class Simulator {
             //чек на количество параметров
             if (arr.length != 5) {
                 error = "line #" + (i + 1) + " not enough parameters, now [" + arr.length + "], need 5";
-                throw new CustomExeption(error);
+                throw new CustomException(error);
             }
 
             //чек на тип
             if (!arr[0].equals("Baloon") && !arr[0].equals("JetPlane") && !arr[0].equals("Helicopter")) {
                 error = "line #" + (i + 1) + " wrong type, now [" + arr[0] + "], need: Baloon or JetPlane or Helicopter";
-                throw new CustomExeption(error);
+                throw new CustomException(error);
             }
 
             //чек на число
@@ -92,11 +92,11 @@ public class Simulator {
                 try {
                     if (Integer.parseInt(arr[x]) <= 0) {
                         error = "line #" + (i + 1) + " wrong int num, now [" + arr[x] + "], need: positive int number";
-                        throw new CustomExeption(error);
+                        throw new CustomException(error);
                     }
                 } catch (NumberFormatException e) {
                     error = "line #" + (i + 1) + " wrong number, now [" + arr[x] + "], need: int number";
-                    throw new CustomExeption(error);
+                    throw new CustomException(error);
                 }
             }
 
@@ -128,7 +128,7 @@ public class Simulator {
         }
     }
 
-    public static void main(String[] args) throws CustomExeption {
+    public static void main(String[] args) throws CustomException {
         if (args.length != 1) {
             System.out.println("usage: java Simulation scenario.txt");
         }

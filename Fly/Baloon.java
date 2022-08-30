@@ -31,7 +31,7 @@ public class Baloon extends Aircraft implements Flyable {
         };
     }
 
-    public void updateCondition() {
+    public void updateConditions() {
         String weather = weatherTower.getWeather(coordinates);
 
         if (weather.equals("RAIN")) {
