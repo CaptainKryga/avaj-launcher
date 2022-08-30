@@ -23,7 +23,7 @@ public class WeatherProvider {
 
     public String getCurrentWeather(Coordinates coordinates) {
         int rnd = coordinates.getLongitude() + coordinates.getLatitude() + coordinates.getHeight() +
-                ThreadLocalRandom.current().nextInt(0, 4);
+                ThreadLocalRandom.current().nextInt(0, 100);
         if (rnd < 0)
             rnd *= -1;
         return weather[rnd % 4];
