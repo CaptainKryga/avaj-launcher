@@ -2,7 +2,7 @@
 
 ### Project about code implementation based on uml table
 
-![[img.png](https://github.com/CaptainKryga/school21-avaj_launcher/blob/main/git/avaj_uml.png)
+![Image alt](https://github.com/CaptainKryga/school21-avaj_launcher/blob/main/git/avaj_uml.png)
 
 For build and start:\
 \
