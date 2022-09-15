@@ -8,9 +8,8 @@ For build and start:\
 \
 find * -name "*.java" > sources.txt\
 javac @sources.txt\
-\
 java Simulator/Simulator tests/default_subj\
-
+\
 sample argument file for project operation:\
 25\
 Fly.Baloon B1 2 3 20\
